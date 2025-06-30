@@ -1,0 +1,25 @@
+<html>
+    <head><script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script></head>
+    <body class="max-w-[500px]">{% block title %}Todo List{% endblock %}
+ {% block content %}
+    <h1 class="text-3xl font-bold mb-6">📝 Todo List</h1>
+    <a href="{% url 'todo_create' %}" class="inline-block mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">+ Add Todo</a>
+    <ul class="bg-white rounded shadow divide-y divide-gray-200">
+        {% for todo in todos %}
+            <li class="p-4 flex justify-between items-center">
+                <div>
+                    <h2 class="font-semibold text-lg">{{ todo.title }}</h2>
+                    <p class="text-sm text-gray-500">{{ todo.description }}</p>
+                    <p class="text-xs text-gray-400">Status: {{ todo.is_active|yesno:"Active,Inactive" }}</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="{% url 'todo_update' todo.pk %}" class="text-yellow-600 hover:text-yellow-800">Edit</a>
+                    <a href="{% url 'todo_delete' todo.pk %}" class="text-red-600 hover:text-red-800">Delete</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="p-4 text-gray-500">No todos yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}</body>
+</html>
